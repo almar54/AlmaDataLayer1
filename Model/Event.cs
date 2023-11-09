@@ -6,20 +6,22 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class City : BaseEntity
+    public class Event : BaseEntity
     {
         protected string name;
+        protected int severity;
         public string Name { get { return name; } set { name = value; } }
+        public int Severity { get { return severity; } set { severity = value; } }
     }
-    public class CityList : List<City>
+    public class EventList : List<Event>
     {
         //בנאי ברירת מחדל - אוסף ריק
-        public CityList() { }
+        public EventList() { }
         //המרה אוסף גנרי לרשימת ערים
-        public CityList(IEnumerable<City> list)
+        public EventList(IEnumerable<Event> list)
             : base(list) { }
         //המרה מטה מטיפוס בסיס לרשימת ערים
-        public CityList(IEnumerable<BaseEntity> list)
-            : base(list.Cast<City>().ToList()) { }
+        public EventList(IEnumerable<BaseEntity> list)
+            : base(list.Cast<Event>().ToList()) { }
     }
 }

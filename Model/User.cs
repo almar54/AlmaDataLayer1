@@ -17,17 +17,8 @@ namespace Model
         protected string email;
         protected string phoneNum;
 
-        public string FirstName
-        {
-            get { return firstName; }
-            set { firstName = value; }
-        }
-        public string LastName
-        {
-            get { return lastName; }
-            set { lastName = value; }
-
-        }
+        public string FirstName { get { return firstName; } set { firstName = value; } }
+        public string LastName { get { return lastName; } set { lastName = value; } }
         public string UserName { get { return userName; } set { userName = value; } }
         public string Password { get { return password; } set { password = value; } }
         public City City { get { return city; } set { city = value; } }

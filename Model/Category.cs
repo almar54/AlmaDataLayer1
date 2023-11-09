@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class City : BaseEntity
+    public class Category : BaseEntity
     {
         protected string name;
         public string Name { get { return name; } set { name = value; } }
     }
-    public class CityList : List<City>
+    public class CategoryList : List<Category>
     {
         //בנאי ברירת מחדל - אוסף ריק
-        public CityList() { }
+        public CategoryList() { }
         //המרה אוסף גנרי לרשימת ערים
-        public CityList(IEnumerable<City> list)
+        public CategoryList(IEnumerable<Category> list)
             : base(list) { }
         //המרה מטה מטיפוס בסיס לרשימת ערים
-        public CityList(IEnumerable<BaseEntity> list)
-            : base(list.Cast<City>().ToList()) { }
+        public CategoryList(IEnumerable<BaseEntity> list)
+            : base(list.Cast<Category>().ToList()) { }
     }
 }
