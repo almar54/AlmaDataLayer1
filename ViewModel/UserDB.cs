@@ -21,14 +21,63 @@ namespace ViewModel
             user.Email = reader["Email"].ToString();
             user.PhoneNum = reader["phoneNum"].ToString();
             CityDb cityDb = new CityDb();
-            int cityId = int.Parse(reader["city"].ToString());
-            user.City = cityDb.SelectById(cityId);
+            int CityId = int.Parse(reader["City"].ToString());
+            user.City = cityDb.SelectById(CityId);
             return user;
         }
 
         protected override BaseEntity NewEntity()
         {
             return new User();
+        }
+        public UserList SelectAll()
+        {
+            command.CommandText = "SELECT * FROM tblUsers";
+            UserList list = new UserList(ExecuteCommand());
+            return list;
+        }
+        public User SelectById(int id)
+        {
+            command.CommandText = "SELECT * FROM tblUsers WHERE id=" + id;
+            UserList list = new UserList(ExecuteCommand());
+            if (list.Count == 0)
+                return null;
+            return list[0];
+        }
+        protected override void LoadParameters(BaseEntity entity)
+        {
+            User user = entity as User;
+            command.Parameters.Clear();
+            command.Parameters.AddWithValue("@userId", user.ID);
+            command.Parameters.AddWithValue("@firstName", user.FirstName);
+            command.Parameters.AddWithValue("@lastName", user.LastName);
+            command.Parameters.AddWithValue("@userName", user.UserName);
+            command.Parameters.AddWithValue("@password", user.Password);
+            command.Parameters.AddWithValue("@city", user.City);
+            command.Parameters.AddWithValue("@isManager", user.IsManager);
+            command.Parameters.AddWithValue("@Email", user.Email);
+            command.Parameters.AddWithValue("@phoneNum", user.PhoneNum);
+        }
+        public int Insert(User user)
+        {
+            command.CommandText = "INSERT INTO tblUsers (firstName, lastName, userName, password, city, isManager, Email, phoneNum) " +
+                "VALUES ('@firstName', '@lastName', '@userName', '@password', '@city', '@isManager', '@Email', '@phoneNum')";
+            LoadParameters(user);
+            return ExecuteCRUD();
+        }
+        public int Update(Post post)
+        {
+            command.CommandText = "UPDATE tblUsers SET firstName = '@firstName', lastName = '@lastName', userName = '@userName', " +
+                "password = '@password', city = '@city', isManager = '@isManager', Email = '@Email', phoneNum = '@phoneNum' " +
+                "WHERE (tblUsers.UserId = '@UserId')";
+            LoadParameters(post);
+            return ExecuteCRUD();
+        }
+        public int Delete(Post post)
+        {
+            command.CommandText = "DELETE FROM tblUsers WHERE (tblUsers.userId = @userId)";
+            LoadParameters(post);
+            return ExecuteCRUD();
         }
     }
 }

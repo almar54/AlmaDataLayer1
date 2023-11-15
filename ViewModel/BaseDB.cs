@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.OleDb;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace ViewModel
 
             protected abstract BaseEntity NewEntity();
             protected abstract BaseEntity CreateModel(BaseEntity entity);
+            protected abstract void LoadParameters(BaseEntity entity);
 
             protected static string connectionString;
             public BaseDB()
@@ -68,6 +70,25 @@ namespace ViewModel
                 s = String.Join("\\", sub);  //חיבור מחדש של המערך עם / מפריד אישי 
                 return s;
             }
+        public int ExecuteCRUD() //עבודה וניהול התקשורת מול המסד
+        {
+            int records = 0;
+            try
+            {
+                connection.Open(); //פתיחת תקשורת עם המסד
+                records = command.ExecuteNonQuery(); //ביצוע השאילתה                
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+            return records;
+        }
     }
 
 }
