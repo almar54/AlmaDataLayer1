@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Model
 {
+    [DataContract]
     public class Event : BaseEntity
     {
         protected string name;
         protected int severity;
+        [DataMember]
         public string Name { get { return name; } set { name = value; } }
+        [DataMember]
         public int Severity { get { return severity; } set { severity = value; } }
     }
+    [CollectionDataContract]
     public class EventList : List<Event>
     {
         //בנאי ברירת מחדל - אוסף ריק

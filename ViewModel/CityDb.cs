@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ViewModel
 {
-    class CityDb : BaseDB
+    public class CityDb : BaseDB
     {
         protected override BaseEntity NewEntity()
         {

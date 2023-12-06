@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Model
 {
+    [DataContract]
     public class Post : BaseEntity 
     {
         protected string title;
@@ -16,15 +18,24 @@ namespace Model
         protected Category category;
         protected Event postEvent;
         protected City city;
+        [DataMember]
         public string Title { get { return title; } set { title = value; } }
+        [DataMember]
         public string Description { get { return description; } set { description = value; } }
+        [DataMember]
         public DateTime PostDate { get { return postDate; } set { postDate = value; } }
+        [DataMember]
         public User User { get { return user; } set { user = value; } }
+        [DataMember]
         public DateTime PostTime { get { return postTime; } set { postTime = value; } }
+        [DataMember]
         public Category Category { get { return category; } set { category = value; } }
+        [DataMember]
         public Event Event { get { return Event; } set { Event = value; } }
+        [DataMember]
         public City City { get { return city; } set { city = value; } }
     }
+    [CollectionDataContract]
     public class PostList : List<Post>
     {
         //בנאי ברירת מחדל - אוסף ריק

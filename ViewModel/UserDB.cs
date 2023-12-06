@@ -65,19 +65,27 @@ namespace ViewModel
             LoadParameters(user);
             return ExecuteCRUD();
         }
-        public int Update(Post post)
+        public int Update(User user)
         {
             command.CommandText = "UPDATE tblUsers SET firstName = '@firstName', lastName = '@lastName', userName = '@userName', " +
                 "password = '@password', city = '@city', isManager = '@isManager', Email = '@Email', phoneNum = '@phoneNum' " +
                 "WHERE (tblUsers.UserId = '@UserId')";
-            LoadParameters(post);
+            LoadParameters(user);
             return ExecuteCRUD();
         }
-        public int Delete(Post post)
+        public int Delete(User user)
         {
             command.CommandText = "DELETE FROM tblUsers WHERE (tblUsers.userId = @userId)";
-            LoadParameters(post);
+            LoadParameters(user);
             return ExecuteCRUD();
+        }
+        public User Login(User user)
+        {
+            command.CommandText = $"SELECT * FROM tblUsers WHERE userName = @userName AND password = @password";
+            LoadParameters(user);
+            UserList list = new UserList(base.ExecuteCommand());
+            if (list.Count == 1) return list[0];
+            return null;
         }
     }
 }
