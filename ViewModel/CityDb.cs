@@ -11,7 +11,7 @@ namespace ViewModel
     {
         protected override BaseEntity NewEntity()
         {
-            throw new NotImplementedException();
+            return new City();
         }
         protected override BaseEntity CreateModel(BaseEntity entity)
         {

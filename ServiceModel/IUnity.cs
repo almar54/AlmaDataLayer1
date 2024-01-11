@@ -16,6 +16,7 @@ namespace ServiceModel
         [OperationContract] int InsertUser(User user);
         [OperationContract] int UpdateUser(User user);
         [OperationContract] int DeleteUser(User user);
+        [OperationContract] bool IsUserNameFree(string username);
 
         [OperationContract] CategoryList GetAllCategories();
         [OperationContract] int InsertCategory(Category category);

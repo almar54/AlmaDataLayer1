@@ -100,6 +100,13 @@ namespace ServiceModel
             return userDB.Insert(user);
         }
 
+        public bool IsUserNameFree(string username)
+        {
+            UserDB db = new UserDB();
+            UserList list = db.CheckUserName(username);
+            return list.Count == 0;
+        }
+
         public User Login(User user)
         {
             UserDB userDB = new UserDB();

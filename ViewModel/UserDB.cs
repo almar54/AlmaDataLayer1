@@ -12,7 +12,7 @@ namespace ViewModel
         protected override BaseEntity CreateModel(BaseEntity entity)
         {
             User user = entity as User;
-            user.ID = int.Parse(reader["id"].ToString());
+            user.ID = int.Parse(reader["userId"].ToString());
             user.FirstName = reader["firstName"].ToString();
             user.LastName = reader["lastName"].ToString();
             user.UserName = reader["userName"].ToString();
@@ -48,28 +48,28 @@ namespace ViewModel
         {
             User user = entity as User;
             command.Parameters.Clear();
-            command.Parameters.AddWithValue("@userId", user.ID);
             command.Parameters.AddWithValue("@firstName", user.FirstName);
             command.Parameters.AddWithValue("@lastName", user.LastName);
             command.Parameters.AddWithValue("@userName", user.UserName);
             command.Parameters.AddWithValue("@password", user.Password);
-            command.Parameters.AddWithValue("@city", user.City);
+            command.Parameters.AddWithValue("@city", user.City.ID);
             command.Parameters.AddWithValue("@isManager", user.IsManager);
-            command.Parameters.AddWithValue("@Email", user.Email);
-            command.Parameters.AddWithValue("@phoneNum", user.PhoneNum);
+            command.Parameters.AddWithValue("@Email", user.Email==null?"":user.Email);
+            command.Parameters.AddWithValue("@phoneNum", user.PhoneNum==null?"":user.PhoneNum);
+            command.Parameters.AddWithValue("@userId", user.ID);
         }
         public int Insert(User user)
         {
-            command.CommandText = "INSERT INTO tblUsers (firstName, lastName, userName, password, city, isManager, Email, phoneNum) " +
-                "VALUES ('@firstName', '@lastName', '@userName', '@password', '@city', '@isManager', '@Email', '@phoneNum')";
+            command.CommandText = "INSERT INTO tblUsers (firstName, lastName, userName, [password], city, isManager, Email, phoneNum) " +
+                "VALUES (@firstName, @lastName, @userName, @password, @city, @isManager, @Email, @phoneNum)";
             LoadParameters(user);
             return ExecuteCRUD();
         }
         public int Update(User user)
         {
-            command.CommandText = "UPDATE tblUsers SET firstName = '@firstName', lastName = '@lastName', userName = '@userName', " +
-                "password = '@password', city = '@city', isManager = '@isManager', Email = '@Email', phoneNum = '@phoneNum' " +
-                "WHERE (tblUsers.UserId = '@UserId')";
+            command.CommandText = "UPDATE tblUsers SET firstName = @firstName, lastName = @lastName, userName = @userName, " +
+                "[password] = @password, city = @city, isManager = @isManager, Email = @Email, phoneNum = @phoneNum " +
+                "WHERE (tblUsers.UserId = @UserId)";
             LoadParameters(user);
             return ExecuteCRUD();
         }
@@ -81,11 +81,17 @@ namespace ViewModel
         }
         public User Login(User user)
         {
-            command.CommandText = $"SELECT * FROM tblUsers WHERE userName = @userName AND password = @password";
-            LoadParameters(user);
+            command.CommandText = $"SELECT * FROM tblUsers WHERE userName = '{user.UserName}' AND [password] ='{user.Password}' ";
             UserList list = new UserList(base.ExecuteCommand());
             if (list.Count == 1) return list[0];
             return null;
+        }
+        public UserList CheckUserName(string username)
+        {
+            command.CommandText = $"SELECT * FROM tblUsers " +
+                $" WHERE (userName = '{username}')";
+            UserList list = new UserList(base.ExecuteCommand());
+            return list;
         }
     }
 }
