@@ -100,6 +100,13 @@ namespace ServiceModel
             return userDB.Insert(user);
         }
 
+        public bool IsCtgNameFree(string name)
+        {
+            CategoryDB db = new CategoryDB();
+            CategoryList list = new CategoryList();
+            return list.Count == 0;
+        }
+
         public bool IsUserNameFree(string username)
         {
             UserDB db = new UserDB();

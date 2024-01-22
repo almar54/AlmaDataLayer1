@@ -39,18 +39,18 @@ namespace ViewModel
         {
             Category category = entity as Category;
             command.Parameters.Clear();
-            command.Parameters.AddWithValue("@CategoryName", category.Name);
-            command.Parameters.AddWithValue("@ID", category.ID);
+            command.Parameters.AddWithValue("@categoryName", category.Name);
+            command.Parameters.AddWithValue("@categoryId", category.ID);
         }
         public int Insert(Category category)
         {
-            command.CommandText = "INSERT INTO tblCategories (categoryName) VALUES ('@categoryName')";
+            command.CommandText = "INSERT INTO tblCategories (categoryName) VALUES (@category)";
             LoadParameters(category);
             return ExecuteCRUD();
         }
         public int Update(Category category)
         {
-            command.CommandText = "UPDATE tblCategories SET categoryName = '@categoryName' WHERE (categoryId = @categoryId)";
+            command.CommandText = "UPDATE tblCategories SET categoryName = @categoryName WHERE (categoryId = @categoryId)";
             LoadParameters(category);
             return ExecuteCRUD();
         }
@@ -59,6 +59,13 @@ namespace ViewModel
             command.CommandText = "DELETE FROM tblCategories WHERE (tblCategories.categoryId = @categoryId)";
             LoadParameters(category);
             return ExecuteCRUD();
+        }
+        public CategoryList CheckName(string name)
+        {
+            command.CommandText = $"SELECT * FROM tblCategories" +
+                $" WHERE (categoryName = '{name}')";
+            CategoryList list = new CategoryList(base.ExecuteCommand());
+            return list;
         }
     }
 }

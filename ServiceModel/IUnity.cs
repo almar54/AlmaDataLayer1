@@ -22,6 +22,7 @@ namespace ServiceModel
         [OperationContract] int InsertCategory(Category category);
         [OperationContract] int UpdateCategory(Category category);
         [OperationContract] int DeleteCategory(Category category);
+        [OperationContract] bool IsCtgNameFree(string name);
 
         [OperationContract] CityList GetAllCities();
         [OperationContract] int InsertCity(City city);
