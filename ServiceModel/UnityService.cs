@@ -103,7 +103,14 @@ namespace ServiceModel
         public bool IsCtgNameFree(string name)
         {
             CategoryDB db = new CategoryDB();
-            CategoryList list = new CategoryList();
+            CategoryList list = db.CheckName(name);
+            return list.Count == 0;
+        }
+
+        public bool IsEventNameFree(string name)
+        {
+            EventDB db = new EventDB();
+            EventList list = db.CheckName(name);
             return list.Count == 0;
         }
 

@@ -40,19 +40,19 @@ namespace ViewModel
         {
             Event mEvent = entity as Event;
             command.Parameters.Clear();
-            command.Parameters.AddWithValue("@eventId", mEvent.ID);
             command.Parameters.AddWithValue("@eventName", mEvent.Name);
             command.Parameters.AddWithValue("@eventSeverity", mEvent.Severity);
+            command.Parameters.AddWithValue("@eventId", mEvent.ID);
         }
         public int Insert(Event event1)
         {
-            command.CommandText = "INSERT INTO tblEvents (eventName, eventSeverity) VALUES ('@eventName', '@eventSeverity')";
+            command.CommandText = "INSERT INTO tblEvents (eventName, eventSeverity) VALUES (@eventName, @eventSeverity)";
             LoadParameters(event1);
             return ExecuteCRUD();
         }
         public int Update(Event event1)
         {
-            command.CommandText = "UPDATE tblEvents SET eventName = '@eventName', eventSeverity = '@eventSeverity' " +
+            command.CommandText = "UPDATE tblEvents SET eventName = @eventName, eventSeverity = @eventSeverity " +
                 "WHERE (tblEvents.eventId = '@eventId')";
             LoadParameters(event1);
             return ExecuteCRUD();
@@ -62,6 +62,13 @@ namespace ViewModel
             command.CommandText = "DELETE FROM tblEvents WHERE (tblEvents.eventId = @eventId)";
             LoadParameters(event1);
             return ExecuteCRUD();
+        }
+        public EventList CheckName(string name)
+        {
+            command.CommandText = $"SELECT * FROM tblEvents" +
+                $" WHERE (eventName = '{name}')";
+            EventList list = new EventList(base.ExecuteCommand());
+            return list;
         }
     }
 }

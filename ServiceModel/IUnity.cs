@@ -33,6 +33,7 @@ namespace ServiceModel
         [OperationContract] int InsertEvent(Event _event);
         [OperationContract] int UpdateEvent(Event _event);
         [OperationContract] int DeleteEvent(Event _event);
+        [OperationContract] bool IsEventNameFree(string name);
 
         [OperationContract] PostList GetAllPosts();
         [OperationContract] int InsertPost(Post post);
