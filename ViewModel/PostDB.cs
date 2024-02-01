@@ -54,28 +54,28 @@ namespace ViewModel
         {
             Post post = entity as Post;
             command.Parameters.Clear();
-            command.Parameters.AddWithValue("@PostId", post.ID);
             command.Parameters.AddWithValue("@title", post.Title);
             command.Parameters.AddWithValue("@description", post.Description);
-            command.Parameters.AddWithValue("@postDate", post.PostDate);
-            command.Parameters.AddWithValue("@userId", post.User);
-            command.Parameters.AddWithValue("@postTime", post.PostTime);
-            command.Parameters.AddWithValue("@categoryId", post.Category);
-            command.Parameters.AddWithValue("@eventId", post.Event);
-            command.Parameters.AddWithValue("@city", post.City);
+            command.Parameters.AddWithValue("@postDate", post.PostDate.ToString("dd/MM/yyyy hh:mm"));
+            command.Parameters.AddWithValue("@userId", post.User.ID);
+            command.Parameters.AddWithValue("@postTime", post.PostTime.ToString("dd/MM/yyyy hh:mm"));
+            command.Parameters.AddWithValue("@categoryId", post.Category.ID);
+            command.Parameters.AddWithValue("@eventId", post.Event.ID);
+            command.Parameters.AddWithValue("@city", post.City.ID);
+            command.Parameters.AddWithValue("@PostId", post.ID);
         }
         public int Insert(Post post)
         {
             command.CommandText = "INSERT INTO tblPost (title, description, postDate, userId, postTime, categoryId, eventId, city) " +
-                "VALUES ('@title', '@description', '@postDate', '@userId', '@postTime', '@categoryId', '@eventId', '@city')";
+                "VALUES (@title, @description, @postDate, @userId, @postTime, @categoryId, @eventId, @city)";
             LoadParameters(post);
             return ExecuteCRUD();
         }
         public int Update(Post post)
         {
-            command.CommandText = "UPDATE tblPost SET title = '@title', description = '@description', postDate = '@postDate', " +
-                "userId = '@userId', postTime = '@postTime', categoryId = '@categoryId', eventId = '@eventId', city = '@city' " +
-                "WHERE (tblPost.PostId = '@postId')";
+            command.CommandText = "UPDATE tblPost SET title = @title, description = @description, postDate = @postDate, " +
+                "userId = @userId, postTime = @postTime, categoryId = @categoryId, eventId = @eventId, city = @city " +
+                "WHERE (tblPost.PostId = @postId)";
             LoadParameters(post);
             return ExecuteCRUD();
         }

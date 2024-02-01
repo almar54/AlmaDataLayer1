@@ -31,7 +31,7 @@ namespace Model
         [DataMember]
         public Category Category { get { return category; } set { category = value; } }
         [DataMember]
-        public Event Event { get { return Event; } set { Event = value; } }
+        public Event Event { get { return postEvent; } set { postEvent = value; } }
         [DataMember]
         public City City { get { return city; } set { city = value; } }
     }
