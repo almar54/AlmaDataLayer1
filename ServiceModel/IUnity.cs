@@ -36,6 +36,7 @@ namespace ServiceModel
         [OperationContract] bool IsEventNameFree(string name);
 
         [OperationContract] PostList GetAllPosts();
+        [OperationContract] PostList GetPostsByDate(DateTime date);
         [OperationContract] int InsertPost(Post post);
         [OperationContract] int UpdatePost(Post post);
         [OperationContract] int DeletePost(Post post);

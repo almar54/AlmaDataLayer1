@@ -50,6 +50,8 @@ namespace ViewModel
                 return null;
             return list[0];
         }
+
+
         protected override void LoadParameters(BaseEntity entity)
         {
             Post post = entity as Post;

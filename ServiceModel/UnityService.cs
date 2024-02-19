@@ -64,6 +64,18 @@ namespace ServiceModel
             return postDB.SelectAll();
         }
 
+        public PostList GetPostsByDate(DateTime date)
+        {
+            PostDB postDB = new PostDB();
+            PostList posts = postDB.SelectAll();
+            PostList posts1 = new PostList();
+            foreach(Post p in posts.FindAll(p => p.PostDate > date))
+            {
+                posts1.Add(p);
+            }
+            return posts1;
+        }
+
         public UserList GetAllUsers()
         {
             UserDB userDB = new UserDB();
