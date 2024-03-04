@@ -38,7 +38,7 @@ namespace ViewModel
         }
         public PostList SelectAll()
         {
-            command.CommandText = "SELECT * FROM tbiPost";
+            command.CommandText = "SELECT * FROM tblPost";
             PostList list = new PostList(ExecuteCommand());
             return list;
         }

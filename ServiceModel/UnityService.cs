@@ -1,6 +1,7 @@
 ﻿using Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -103,7 +104,9 @@ namespace ServiceModel
         public int InsertPost(Post post)
         {
             PostDB postDB = new PostDB();
-            return postDB.Insert(post);
+            postDB.Insert(post);
+            int id= postDB.SelectAll().Last().ID;
+            return id;
         }
 
         public int InsertUser(User user)
@@ -168,5 +171,33 @@ namespace ServiceModel
             UserDB userDB = new UserDB();
             return userDB.Update(user);
         }
+
+      
+
+         #region Image
+        public byte[] GetIamge(string fileName, string post)
+        {
+            //ViewModel הנחה: הקובץ קיים ושמור בתיקיית תמונות בתוך
+            //הפרמטר כולל רק את שם הקובץ
+            string path = Path.Combine(Environment.CurrentDirectory, @"..\..\..\ViewModel\Images\Posts\"+post+"\\" + fileName);
+            byte[] imgArray = File.ReadAllBytes(path);
+            return imgArray;
+        }
+        public void SaveImage(byte[] imageArray, string fileName)
+        {
+            MemoryStream stream = new MemoryStream(imageArray);
+            System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
+
+            string localFilePath = Path.Combine(Environment.CurrentDirectory, @"..\..\..\ViewModel\Images\Posts\" + fileName);
+            image.Save(localFilePath);
+        }
+        public string[] GetImagesByPost(string post)
+        {
+            string imageDirectory = Path.Combine(Environment.CurrentDirectory, @"..\..\..\ViewModel\Images\Posts\");
+            DirectoryInfo directory = new DirectoryInfo(imageDirectory + post + "\\");
+            FileInfo[] files = directory.GetFiles("*.*");
+            return files.Select(file => file.Name).ToArray();
+        }
+        #endregion
     }
 }

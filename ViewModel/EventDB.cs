@@ -30,7 +30,7 @@ namespace ViewModel
         }
         public Event SelectById(int id)
         {
-            command.CommandText = "SELECT * FROM tblEvents WHERE id=" + id;
+            command.CommandText = "SELECT * FROM tblEvents WHERE eventId=" + id;
             EventList list = new EventList(ExecuteCommand());
             if (list.Count == 0)
                 return null;

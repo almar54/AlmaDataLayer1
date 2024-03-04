@@ -38,7 +38,7 @@ namespace ViewModel
         }
         public User SelectById(int id)
         {
-            command.CommandText = "SELECT * FROM tblUsers WHERE id=" + id;
+            command.CommandText = "SELECT * FROM tblUsers WHERE userId=" + id;
             UserList list = new UserList(ExecuteCommand());
             if (list.Count == 0)
                 return null;

@@ -59,9 +59,13 @@
     <Content Include="DB.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Posts\5\צילום מסך 2023-08-02 155331.png" />
+    <Content Include="Images\Posts\5\צילום מסך 2023-08-02 162701.png" />
+    <Content Include="Images\Posts\5\צילום מסך 2023-08-02 162826.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ViewModelClassDiagram.cd" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

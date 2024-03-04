@@ -40,5 +40,11 @@ namespace ServiceModel
         [OperationContract] int InsertPost(Post post);
         [OperationContract] int UpdatePost(Post post);
         [OperationContract] int DeletePost(Post post);
+        #region Image
+        [OperationContract] byte[] GetIamge(string fileName,string post);
+        [OperationContract] void SaveImage(byte[] imageArray, string fileName);
+        [OperationContract] string[] GetImagesByPost(string post);
+
+        #endregion
     }
 }
