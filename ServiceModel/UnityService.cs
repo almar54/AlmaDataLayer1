@@ -104,7 +104,8 @@ namespace ServiceModel
         public int InsertPost(Post post)
         {
             PostDB postDB = new PostDB();
-            postDB.Insert(post);
+           int record= postDB.Insert(post);
+            if (record == 0) return -1;
             int id= postDB.SelectAll().Last().ID;
             return id;
         }
@@ -171,10 +172,15 @@ namespace ServiceModel
             UserDB userDB = new UserDB();
             return userDB.Update(user);
         }
+        public PostList GetPostsByUserId(int userId)
+        {
+            PostDB postDB = new PostDB();
+            return postDB.SelebtByUserId(userId);
+        }
 
-      
 
-         #region Image
+
+        #region Image
         public byte[] GetIamge(string fileName, string post)
         {
             //ViewModel הנחה: הקובץ קיים ושמור בתיקיית תמונות בתוך
@@ -189,15 +195,20 @@ namespace ServiceModel
             System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
 
             string localFilePath = Path.Combine(Environment.CurrentDirectory, @"..\..\..\ViewModel\Images\Posts\" + fileName);
+            Directory.CreateDirectory(localFilePath.Substring(0,localFilePath.LastIndexOf("\\")));
             image.Save(localFilePath);
         }
         public string[] GetImagesByPost(string post)
         {
             string imageDirectory = Path.Combine(Environment.CurrentDirectory, @"..\..\..\ViewModel\Images\Posts\");
             DirectoryInfo directory = new DirectoryInfo(imageDirectory + post + "\\");
+            if (!Directory.Exists(directory.FullName)) 
+                return null;
             FileInfo[] files = directory.GetFiles("*.*");
             return files.Select(file => file.Name).ToArray();
         }
+
+
         #endregion
     }
 }

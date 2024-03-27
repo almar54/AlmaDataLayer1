@@ -50,6 +50,12 @@ namespace ViewModel
                 return null;
             return list[0];
         }
+        public PostList SelebtByUserId(int userId)
+        {
+            command.CommandText = "SELECT * FROM tblPost WHERE userId=" + userId;
+            PostList list = new PostList(ExecuteCommand());
+            return list;
+        }
 
 
         protected override void LoadParameters(BaseEntity entity)
